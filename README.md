@@ -46,9 +46,11 @@ docker-compose exec app npx prisma migrate dev --name init
 ### 4\. アプリへのアクセス
 
 ブラウザで以下のURLにアクセスしてください。
+
 http://localhost:3000
 
 ## 📝 データベース管理 (Prisma Studio)
 
 以下のURLでデータベースの中身をGUIで確認・編集できます。
+
 http://localhost:5555
