@@ -1,0 +1,21 @@
+// prisma/schema.prisma
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  // 環境変数から接続URLを取得（docker-compose.ymlで設定済み）
+  url      = env("DATABASE_URL")
+}
+
+// ここから下が日報データの定義です
+model DailyReport {
+  id        Int      @id @default(autoincrement()) // 管理ID（自動連番）
+  date      DateTime @default(now())               // 日付
+  content   String                                 // やったこと（本文）
+  learning  String?                                // 学んだこと（任意）
+  createdAt DateTime @default(now())               // 作成日時
+}
