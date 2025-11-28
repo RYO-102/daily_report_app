@@ -13,46 +13,60 @@ export default async function Admin() {
 		<h1 className="text-2xl font-bold mb-6 text-gray-800">📝 実行委員会ブログ管理画面</h1>
 
 		{/* 投稿フォーム */}
-		<form action={createReport} className="space-y-4 mb-10">
-		  <div>
-			<label className="block font-bold text-sm text-gray-700">日付</label>
-			<input
-			  name="date"
-			  type="date"
-			  required
-			  defaultValue={new Date().toISOString().split('T')[0]}
-			  className="w-full border p-2 rounded mt-1 text-black"
-			/>
-		  </div>
+        <form action={createReport} className="space-y-4 mb-10 bg-gray-50 p-6 rounded-lg border">
+          <h3 className="font-bold text-lg mb-4">🖊️ 新しい記事を書く</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-bold text-sm text-gray-700">日付</label>
+              <input
+                name="date"
+                type="date"
+                required
+                defaultValue={new Date().toISOString().split('T')[0]}
+                className="w-full border p-2 rounded mt-1"
+              />
+            </div>
+            <div>
+              <label className="block font-bold text-sm text-gray-700">今日の見出し (Title)</label>
+              <input
+                name="title"
+                type="text"
+                required
+                placeholder="例：42Tokyoの課題が進まない件について"
+                className="w-full border p-2 rounded mt-1"
+              />
+            </div>
+          </div>
 
-		  <div>
-			<label className="block font-bold text-sm text-gray-700">やったこと</label>
-			<textarea
-			  name="content"
-			  required
-			  rows={3}
-			  className="w-full border p-2 rounded mt-1 text-black"
-			  placeholder="今日は何をしましたか？"
-			/>
-		  </div>
+          <div>
+            <label className="block font-bold text-sm text-gray-700">業務トピック (Topics)</label>
+            <textarea
+              name="content"
+              required
+              rows={5}
+              className="w-full border p-2 rounded mt-1"
+              placeholder="・プロジェクトの進捗&#13;&#10;・発生したバグ&#13;&#10;・チームへの共有事項"
+            />
+          </div>
 
-		  <div>
-			<label className="block font-bold text-sm text-gray-700">学び・気付き</label>
-			<textarea
-			  name="learning"
-			  rows={2}
-			  className="w-full border p-2 rounded mt-1 text-black"
-			  placeholder="何か新しい発見は？"
-			/>
-		  </div>
+          <div>
+            <label className="block font-bold text-sm text-gray-700">よもやま話 (Yomoyama)</label>
+            <textarea
+              name="yomoyama"
+              rows={3}
+              className="w-full border p-2 rounded mt-1"
+              placeholder="・最近プレイしたゲーム&#13;&#10;・個人的なニュース&#13;&#10;・思ったこと"
+            />
+          </div>
 
-		  <button
-			type="submit"
-			className="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition"
-		  >
-			日報を送信する
-		  </button>
-		</form>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition"
+          >
+            日報を公開する
+          </button>
+        </form>
 
 		<hr className="my-8" />
 
