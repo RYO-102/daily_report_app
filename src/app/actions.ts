@@ -7,20 +7,23 @@ import { revalidatePath } from 'next/cache';
 export async function createReport(formData: FormData) {
   // フォームから入力値を取り出す
   const date = formData.get('date') as string;
+  const title = formData.get('title') as string;       // 👈 追加
   const content = formData.get('content') as string;
-  const learning = formData.get('learning') as string;
+  const yomoyama = formData.get('yomoyama') as string; // 👈 追加
 
   // データベースに保存！
   await prisma.dailyReport.create({
     data: {
-      date: new Date(date), // 文字列を日付型に変換
+      date: new Date(date),
+      title: title,       // 👈 追加
       content: content,
-      learning: learning,
+      yomoyama: yomoyama, // 👈 追加
     },
   });
 
   // 画面を更新して、トップページに戻る
   revalidatePath('/');
+  revalidatePath('/admin');
 }
 
 // 日報を削除する関数
