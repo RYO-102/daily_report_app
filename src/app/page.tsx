@@ -14,20 +14,34 @@ export default async function Home() {
 
         <hr className="my-8" />
 
-        {/* 一覧表示エリア */}
-        <h2 className="text-xl font-bold mb-4 text-gray-800">投稿されたの日報 ({reports.length}件)</h2>
-        <div className="space-y-4">
+        {/* ブログ一覧 */}
+        <div className="space-y-6">
           {reports.map((report) => (
-            <div key={report.id} className="border-l-4 border-blue-500 bg-gray-50 p-4 rounded">
-              {/* 左側：日記の内容 */}
-              <div>
-                <div className="text-sm text-gray-500 mb-1">
-                  {new Date(report.date).toLocaleDateString()} の日報
+            <div key={report.id} className="bg-white border rounded-lg shadow-sm overflow-hidden hover:shadow-md transition">
+              {/* ヘッダー部分 */}
+              <div className="bg-blue-600 px-4 py-2 flex justify-between items-center text-white">
+                <span className="font-bold text-lg">{report.title}</span>
+                <span className="text-sm bg-blue-700 px-2 py-1 rounded">
+                  {new Date(report.date).toLocaleDateString()}
+                </span>
+              </div>
+
+              <div className="p-5 space-y-4">
+                {/* 業務トピック */}
+                <div>
+                  <h4 className="font-bold text-gray-700 mb-1 border-b inline-block">📋 業務トピック</h4>
+                  <div className="whitespace-pre-wrap text-gray-800 mt-2 leading-relaxed">
+                    {report.content}
+                  </div>
                 </div>
-                <div className="whitespace-pre-wrap text-gray-800 font-medium">{report.content}</div>
-                {report.learning && (
-                  <div className="mt-2 text-sm text-gray-600 bg-yellow-50 p-2 rounded inline-block">
-                    💡 学び: {report.learning}
+
+                {/* よもやま話（ある場合のみ表示） */}
+                {report.yomoyama && (
+                  <div className="bg-orange-50 p-4 rounded-lg border border-orange-100">
+                    <h4 className="font-bold text-orange-800 mb-1">☕ よもやま話</h4>
+                    <div className="whitespace-pre-wrap text-gray-700 text-sm">
+                      {report.yomoyama}
+                    </div>
                   </div>
                 )}
               </div>
@@ -35,7 +49,9 @@ export default async function Home() {
           ))}
           
           {reports.length === 0 && (
-            <p className="text-gray-500 text-center">まだ日報がありません。最初の投稿がされるまで待ちましょう！</p>
+            <div className="text-center py-10 text-gray-500">
+              <p>まだ記事が投稿されていません。</p>
+            </div>
           )}
         </div>
       </main>
