@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import DeleteButton from './DeleteButton'; // 👈 追加
 import { createReport } from '../actions'; // deleteReport はもう使わないので消してOK
 import { prisma } from '@/lib/prisma';
@@ -72,49 +73,40 @@ export default async function Admin() {
 		<hr className="my-8" />
 
 		{/* ブログ管理一覧 */}
-        <h2 className="text-xl font-bold mb-4 text-gray-800">投稿済みのブログ ({reports.length}件)</h2>
-        <div className="space-y-6">
+        <h2 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">投稿管理リスト ({reports.length}件)</h2>
+        <div className="bg-white rounded-lg border shadow-sm divide-y">
           {reports.map((report) => (
-            <div key={report.id} className="bg-white border rounded-lg shadow-sm overflow-hidden group">
+            <div key={report.id} className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4 hover:bg-gray-50 transition">
               
-              {/* ▼▼▼ ヘッダー部分（ここに削除ボタンを入れ込みました） ▼▼▼ */}
-              <div className="bg-gray-700 px-4 py-3 flex justify-between items-center text-white">
-                {/* 左側：タイトル */}
-                <span className="font-bold text-lg truncate mr-4">{report.title}</span>
-                
-                {/* 右側：日付と削除ボタンを横並びに */}
-                <div className="flex items-center gap-3">
-                  <span className="text-sm bg-gray-600 px-2 py-1 rounded whitespace-nowrap">
-                    {new Date(report.date).toLocaleDateString()}
+              {/* 左側：タイトルと日付（クリックで詳細へ） */}
+              {/* ▼▼▼ 印 (?from=admin) をつけました ▼▼▼ */}
+              <Link href={`/articles/${report.id}?from=admin`} className="flex-grow group min-w-0 w-full sm:w-auto">
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-lg text-gray-800 group-hover:text-blue-600 transition truncate">
+                      {report.title}
+                    </span>
+                  </div>
+                  <span className="text-sm text-gray-400 mt-1 flex items-center gap-1">
+                    📅 {new Date(report.date).toLocaleDateString()}
                   </span>
-                  
-                  {/* 削除ボタン（マウスを乗せた時だけ少し明るくする） */}
-                  <div className="opacity-70 group-hover:opacity-100 transition">
-                    <DeleteButton id={report.id} />
-                  </div>
                 </div>
-              </div>
-              {/* ▲▲▲ ここまで変更 ▲▲▲ */}
+              </Link>
 
-              <div className="p-5 space-y-4">
-                {/* 業務トピック */}
-                <div>
-                  <h4 className="font-bold text-gray-700 mb-1 border-b inline-block">📋 業務トピック</h4>
-                  <div className="whitespace-pre-wrap text-gray-800 mt-2 leading-relaxed line-clamp-3">
-                    {report.content}
-                  </div>
-                </div>
+              {/* 右側：操作ボタンエリア（サイズを調整してスッキリさせました） */}
+              <div className="flex items-center gap-2 shrink-0">
+                {/* 編集ボタン */}
+                <Link 
+                  href={`/admin/edit/${report.id}`} 
+                  className="text-sm border border-green-500 text-green-600 px-3 py-1.5 rounded hover:bg-green-50 transition flex items-center gap-1"
+                >
+                  ✏️ 編集
+                </Link>
 
-                {/* よもやま話 */}
-                {report.yomoyama && (
-                  <div className="bg-orange-50 p-3 rounded-lg border border-orange-100">
-                    <h4 className="font-bold text-orange-800 mb-1 text-sm">☕ よもやま話</h4>
-                    <div className="whitespace-pre-wrap text-gray-700 text-xs line-clamp-2">
-                      {report.yomoyama}
-                    </div>
-                  </div>
-                )}
+                {/* 削除ボタン（コンポーネント側でデザイン調整が必要ですが、一旦配置） */}
+                <DeleteButton id={report.id} />
               </div>
+              
             </div>
           ))}
           

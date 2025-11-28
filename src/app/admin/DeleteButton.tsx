@@ -12,7 +12,8 @@ export default function DeleteButton({ id }: Props) {
       <input type="hidden" name="id" value={id} />
       <button
         type="submit"
-        className="bg-red-500 text-white text-sm px-4 py-2 rounded shadow hover:bg-red-600 transition flex items-center"
+        // アウトライン（枠線のみ）スタイルに変更して、圧迫感を減らします
+        className="text-sm border border-red-500 text-red-600 px-3 py-1.5 rounded hover:bg-red-50 transition flex items-center gap-1"
         onClick={(e) => {
           // ブラウザ側で動くので、ここでconfirmが使えます
           if (!confirm('本当にこのブログ記事を削除しますか？')) {
