@@ -22,3 +22,18 @@ export async function createReport(formData: FormData) {
   // 画面を更新して、トップページに戻る
   revalidatePath('/');
 }
+
+// 日報を削除する関数
+export async function deleteReport(formData: FormData) {
+  const id = formData.get('id') as string;
+
+  // データベースから削除！
+  await prisma.dailyReport.delete({
+    where: {
+      id: parseInt(id), // 文字列のIDを数字に変換して指定
+    },
+  });
+
+  // 画面を更新
+  revalidatePath('/');
+}
