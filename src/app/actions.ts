@@ -53,8 +53,12 @@ export async function updateReport(formData: FormData) {
   const title = formData.get('title') as string;
   const content = formData.get('content') as string;
   const yomoyama = formData.get('yomoyama') as string;
+  
+  // ▼▼▼ 追加：画像URLを受け取る ▼▼▼
+  const imageUrlRaw = formData.get('imageUrl') as string;
+  const imageUrl = imageUrlRaw === '' ? null : imageUrlRaw;
 
-  // データベースを上書き保存 (update)
+  // データベースを上書き保存
   await prisma.dailyReport.update({
     where: {
       id: parseInt(id),
@@ -64,6 +68,7 @@ export async function updateReport(formData: FormData) {
       title: title,
       content: content,
       yomoyama: yomoyama,
+      imageUrl: imageUrl, // 👈 追加：ここを忘れずに！
     },
   });
 

@@ -1,3 +1,4 @@
+import ImageUpload from '../../ImageUpload'; // 👈 追加（階層に注意！）
 import { prisma } from '@/lib/prisma';
 import { updateReport } from '@/app/actions'; // updateReportをインポート
 import { notFound } from 'next/navigation';
@@ -69,6 +70,10 @@ export default async function EditPage({ params }: Props) {
               className="w-full border p-2 rounded mt-1"
             />
           </div>
+
+          {/* ▼▼▼ 追加：画像アップロード部品（初期値を渡す！） ▼▼▼ */}
+          <ImageUpload defaultImage={report.imageUrl} />
+          {/* ▲▲▲ ここまで ▲▲▲ */}
 
           <div className="flex gap-4">
             <a href="/admin" className="w-1/3 bg-gray-500 text-white text-center font-bold py-2 px-4 rounded hover:bg-gray-600 transition block">
