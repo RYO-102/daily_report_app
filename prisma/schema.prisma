@@ -20,5 +20,7 @@ model DailyReport {
   content   String   // 業務トピック
   yomoyama  String?  // 👈 追加：よもやま話（任意）
 
+  imageUrl  String?  // 👈 追加！「今日の一枚」のURL（無い日もあるので ? をつける）
+
   createdAt DateTime @default(now())
 }
