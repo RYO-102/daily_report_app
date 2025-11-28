@@ -1,3 +1,4 @@
+import Image from 'next/image'; // 👈 追加
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -53,6 +54,22 @@ export default async function ArticleDetail({ params, searchParams }: Props) {
               </div>
             </section>
           )}
+
+          {/* ▼▼▼ 追加：今日の一枚 ▼▼▼ */}
+          {report.imageUrl && (
+            <section>
+              <h2 className="font-bold text-xl text-gray-800 mb-3 border-b pb-2">📸 今日の一枚</h2>
+              <div className="relative w-full h-96 bg-gray-100 rounded-lg overflow-hidden border">
+                <Image 
+                  src={report.imageUrl} 
+                  alt="今日の一枚" 
+                  fill 
+                  className="object-contain" // 画像全体が見えるように表示
+                />
+              </div>
+            </section>
+          )}
+          {/* ▲▲▲ ここまで ▲▲▲ */}
 
           {/* 戻るボタン（動的に変わる！） */}
           <div className="pt-8 border-t text-center">

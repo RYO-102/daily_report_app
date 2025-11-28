@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ImageUpload from './ImageUpload';
 import DeleteButton from './DeleteButton'; // 👈 追加
 import { createReport } from '../actions'; // deleteReport はもう使わないので消してOK
 import { prisma } from '@/lib/prisma';
@@ -61,6 +62,8 @@ export default async function Admin() {
               placeholder="・最近プレイしたゲーム&#13;&#10;・個人的なニュース&#13;&#10;・思ったこと"
             />
           </div>
+
+          <ImageUpload />
 
           <button
             type="submit"

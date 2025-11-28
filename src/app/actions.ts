@@ -6,19 +6,23 @@ import { redirect } from 'next/navigation';
 
 // 日報を保存する関数
 export async function createReport(formData: FormData) {
-  // フォームから入力値を取り出す
   const date = formData.get('date') as string;
-  const title = formData.get('title') as string;       // 👈 追加
+  const title = formData.get('title') as string;
   const content = formData.get('content') as string;
-  const yomoyama = formData.get('yomoyama') as string; // 👈 追加
+  const yomoyama = formData.get('yomoyama') as string;
+  // ▼▼▼ 追加：画像URLを受け取る ▼▼▼
+  // 画像がない場合は空文字になるので、空文字なら null に変換する
+  const imageUrlRaw = formData.get('imageUrl') as string;
+  const imageUrl = imageUrlRaw === '' ? null : imageUrlRaw;
 
-  // データベースに保存！
+  // データベースに保存
   await prisma.dailyReport.create({
     data: {
       date: new Date(date),
-      title: title,       // 👈 追加
+      title: title,
       content: content,
-      yomoyama: yomoyama, // 👈 追加
+      yomoyama: yomoyama,
+      imageUrl: imageUrl, // 👈 追加：DBに保存！
     },
   });
 
