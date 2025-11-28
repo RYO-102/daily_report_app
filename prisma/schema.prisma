@@ -13,9 +13,12 @@ datasource db {
 
 // ここから下が日報データの定義です
 model DailyReport {
-  id        Int      @id @default(autoincrement()) // 管理ID（自動連番）
-  date      DateTime @default(now())               // 日付
-  content   String                                 // やったこと（本文）
-  learning  String?                                // 学んだこと（任意）
-  createdAt DateTime @default(now())               // 作成日時
+  id        Int      @id @default(autoincrement())
+  date      DateTime @default(now())
+  
+  title     String   // 👈 追加：今日の見出し
+  content   String   // 業務トピック
+  yomoyama  String?  // 👈 追加：よもやま話（任意）
+
+  createdAt DateTime @default(now())
 }
