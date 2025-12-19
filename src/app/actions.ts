@@ -42,6 +42,9 @@ export async function deleteReport(formData: FormData) {
     },
   });
 
+  // 「管理画面」のキャッシュを捨てて、最新情報を再取得させる
+  revalidatePath('/admin');
+
   // 画面を更新
   revalidatePath('/');
 }
